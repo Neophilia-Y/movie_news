@@ -9,3 +9,6 @@ Using React and es6
 - Home
 - Search
 - Detail
+
+##API
+- https://www.themoviedb.org/settings/api
