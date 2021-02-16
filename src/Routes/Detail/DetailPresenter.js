@@ -48,6 +48,7 @@ const Data = styled.div`
 
 const Title = styled.h3`
   font-size: 32px;
+  margin-bottom: 10px;
 `;
 
 const ItemContainer = styled.div`
@@ -67,6 +68,30 @@ const Overview = styled.p`
   width: 50%;
 `;
 
+const ImdbLink = styled.a`
+  font-size: 20px;
+  background-color : yellow;
+  color: black;
+  round: 10px;
+  padding: 0px 10px;
+  border-radius: 10px;
+`;
+
+const VideoContainer = styled.div`
+  padding: 30px 3px;
+
+`;
+const Iframe = styled.iframe`
+  display: block;
+  margin: 20px;
+  border: solid 2px red;
+`;
+const ExtraInfo = styled.div`
+
+`;
+const Tabs = styled.div`
+
+`;
 const DetailPresenter = ({ result, loading, error }) =>
   loading ? (
 
@@ -86,6 +111,7 @@ const DetailPresenter = ({ result, loading, error }) =>
                 ? result.original_title
                 : result.original_name}
             </Title>
+            <ImdbLink href={`https://www.imdb.com/title/${result.imdb_id}/`}>IMDB Link</ImdbLink>
             <ItemContainer>
               <Item>
                 {result.release_date
@@ -107,6 +133,22 @@ const DetailPresenter = ({ result, loading, error }) =>
               </Item>
             </ItemContainer>
             <Overview>{result.overview}</Overview>
+
+            {result.videos && result.videos.results.length > 1 &&
+              <VideoContainer>
+                <Iframe title="0" width="300" src={`https://www.youtube.com/embed/${result.videos.results[0].key}`}></Iframe>
+                <Iframe title="1" width="300" src={`https://www.youtube.com/embed/${result.videos.results[1].key}`}></Iframe>
+              </VideoContainer>
+            }
+
+
+            <ExtraInfo>
+              <Tabs>
+
+              </Tabs>
+            </ExtraInfo>
+
+
           </Data>
         </Content>
       </Container>

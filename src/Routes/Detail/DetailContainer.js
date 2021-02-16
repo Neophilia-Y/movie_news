@@ -46,6 +46,7 @@ export default class extends React.Component {
       this.setState({ error: "Can't find Result" });
     } finally {
       this.setState({ loading: false, result: result });
+      console.log(result)
     }
   }
 }
