@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import "./Loader.css";
 
 const Container = styled.div`
   height: 100vh;
@@ -10,10 +11,10 @@ const Container = styled.div`
   margin-top: 20px;
 `;
 
+
+
 export default () => (
   <Container>
-    <span role="img" aria-label="Loading">
-      ⏰
-    </span>
+    <div className="loading">Loading&#8230;</div>
   </Container>
 );

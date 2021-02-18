@@ -12,7 +12,7 @@ const TabInfo = ({ location: { state } }) => {
 
     if (typeof state === "undefined") {
         return (<TabContaniner>
-            <h2>Empty</h2>
+            <h2>Select Tab</h2>
         </TabContaniner>)
     }
     const { info } = state;

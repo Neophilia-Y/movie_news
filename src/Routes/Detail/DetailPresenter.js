@@ -81,6 +81,10 @@ const ImdbLink = styled.a`
 
 const VideoContainer = styled.div`
   padding: 30px 3px;
+  height: 250px;
+  width : 700px;
+  display: flex;
+  overflow: scroll;
 
 `;
 const Iframe = styled.iframe`
@@ -90,19 +94,25 @@ const Iframe = styled.iframe`
 `;
 const ExtraInfo = styled.div`
   margin : 20px;
+  height: 180px;
+  width: 300px;
+  border: 1px solid #132429;
 `;
 const Tabs = styled.ul`
   height:30px;
   display: flex;
+  border-bottom: 1px solid black;
+  justify-content: space-around;
 
 `;
 
 const Tab = styled.li`
-margin-right: 20px;
+  
   text-transform: uppercase;
   font-weight: 600;
-  color: yellow;
-  border: 2px solid red;
+  color: blue;
+  border: 1px solid green; 
+  box-shadow: 10px 1px 30px 2px green;
   padding: 5px;
   border-radius: 3px;
   background-color: ${props => (props.active ? "white" : "transparent")};
