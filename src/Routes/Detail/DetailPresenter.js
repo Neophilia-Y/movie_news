@@ -166,7 +166,7 @@ const DetailPresenter = withRouter(({ location: { pathname }, result, loading, e
             {!isMovie && result.seasons && result.seasons.length > 0 && (<SeasonInfo>
               {result.seasons.map((season) => (
                 <Season>
-                  <img width="200px" src={`https://image.tmdb.org/t/p/original${season.poster_path}`}></img>
+                  <img width="200px" src={`https://image.tmdb.org/t/p/original${season.poster_path}`} alt={season.name}></img>
                   <h4>{season.name}</h4>
                 </Season>
               ))}
