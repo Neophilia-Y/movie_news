@@ -13,12 +13,13 @@ export default class extends React.Component {
       loading: true,
       error: null,
       isMovie: pathname.includes("/movie/"),
+      id: null,
     };
 
   }
   render() {
-    const { result, loading, error } = this.state;
-    return <DetailPresenter result={result} loading={loading} error={error} />;
+    const { result, loading, error, isMovie, id } = this.state;
+    return <DetailPresenter result={result} loading={loading} error={error} isMovie={isMovie} id={id} />;
   }
   async componentDidMount() {
     const {
@@ -45,7 +46,7 @@ export default class extends React.Component {
     } catch {
       this.setState({ error: "Can't find Result" });
     } finally {
-      this.setState({ loading: false, result: result });
+      this.setState({ loading: false, result: result, id: id });
       console.log(result)
     }
   }

@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Loader from "Components/Loader";
+import { Link, Route, withRouter } from "react-router-dom";
+import TabInfo from "../../Components/TabInfo";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -87,18 +89,45 @@ const Iframe = styled.iframe`
   border: solid 2px red;
 `;
 const ExtraInfo = styled.div`
+  margin : 20px;
+`;
+const Tabs = styled.ul`
+  height:30px;
+  display: flex;
 
 `;
-const Tabs = styled.div`
+
+const Tab = styled.li`
+margin-right: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: yellow;
+  border: 2px solid red;
+  padding: 5px;
+  border-radius: 3px;
+  background-color: ${props => (props.active ? "white" : "transparent")};
+`;
+
+const SeasonInfo = styled.div`
+display: flex;
+  margin: 20px 0px;
+  width: 100%;
 
 `;
-const DetailPresenter = ({ result, loading, error }) =>
+const Season = styled.div`
+  margin: 10px;
+  width: 200px;
+  height: 300px;
+`;
+
+
+const DetailPresenter = withRouter(({ location: { pathname }, result, loading, error, isMovie, id }) =>
   loading ? (
 
     <Loader />
 
   ) : (
-      <Container>
+      < Container >
         <Backdrop bgImage={`https://image.tmdb.org/t/p/original${result.poster_path}`} />
         <Content>
           <Cover
@@ -134,25 +163,55 @@ const DetailPresenter = ({ result, loading, error }) =>
             </ItemContainer>
             <Overview>{result.overview}</Overview>
 
-            {result.videos && result.videos.results.length > 1 &&
-              <VideoContainer>
-                <Iframe title="0" width="300" src={`https://www.youtube.com/embed/${result.videos.results[0].key}`}></Iframe>
-                <Iframe title="1" width="300" src={`https://www.youtube.com/embed/${result.videos.results[1].key}`}></Iframe>
-              </VideoContainer>
-            }
+            {!isMovie && result.seasons && result.seasons.length > 0 && (<SeasonInfo>
+              {result.seasons.map((season) => (
+                <Season>
+                  <img width="200px" src={`https://image.tmdb.org/t/p/original${season.poster_path}`}></img>
+                  <h4>{season.name}</h4>
+                </Season>
+              ))}
+            </SeasonInfo>
+            )}
 
+            {result.videos && result.videos.results.length > 0 && (
+              <VideoContainer>
+                {result.videos.results.map((i, index) => (
+                  <Iframe title={index} width="300" height="160" src={`https://www.youtube.com/embed/${i.key}`}></Iframe>
+                ))
+                }
+              </VideoContainer>)
+            }
 
             <ExtraInfo>
               <Tabs>
-
+                <Tab active={pathname.includes("company")}>
+                  <Link to={{
+                    pathname: isMovie ? `/movie/${id}/company` : `/show/${id}/company`,
+                    state: {
+                      info: (result.production_companies || null),
+                    }
+                  }} >Company</Link>
+                </Tab>
+                <Tab active={pathname.includes("country")}>
+                  <Link to={{
+                    pathname: isMovie ? `/movie/${id}/country` : `/show/${id}/country`,
+                    state: {
+                      info: (result.production_countries || null),
+                    }
+                  }}>Country</Link>
+                </Tab>
               </Tabs>
-            </ExtraInfo>
 
+              <Route path={isMovie ? `/movie/${id}/company` : `/show/${id}/company`} component={TabInfo} />
+              <Route path={isMovie ? `/movie/${id}/country` : `/show/${id}/country`} component={TabInfo} />
+
+
+            </ExtraInfo>
 
           </Data>
         </Content>
-      </Container>
-    );
+      </Container >
+    ));
 
 DetailPresenter.propTypes = {
   result: PropTypes.object,
